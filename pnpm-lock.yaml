@@ -29,6 +29,9 @@ importers:
       next:
         specifier: 15.1.1-canary.22
         version: 15.1.1-canary.22(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      next-view-transitions:
+        specifier: ^0.3.4
+        version: 0.3.4(next@15.1.1-canary.22(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       react:
         specifier: ^19.0.0
         version: 19.0.0
@@ -721,6 +724,13 @@ packages:
     resolution: {integrity: sha512-WNLf5Sd8oZxOm+TzppcYk8gVOgP+l58xNy58D0nbUnOxOWRWvlcCV4kUF7ltmI6PsrLl/BgKEyS4mqsGChFN0w==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
+
+  next-view-transitions@0.3.4:
+    resolution: {integrity: sha512-SSiskenQ8JkEFGzPjvFwC5LGGoqgTxM5dxexkeugxvcXFLpWI2ZUh4IsCURD3ovW+8Ue7xXlrtrpy8b7XR7IwQ==}
+    peerDependencies:
+      next: '>=14.0.0'
+      react: ^18.2.0
+      react-dom: ^18.2.0
 
   next@15.1.1-canary.22:
     resolution: {integrity: sha512-hphbkY9U2YKMHyuDmaD3JsCM8sVrOU4X1LfyUH8jWAGkbF0uNFMKHO0OWsp3R6pd0i1vyDBI+lxFXBxYi6A5ZA==}
@@ -1589,6 +1599,12 @@ snapshots:
       thenify-all: 1.6.0
 
   nanoid@3.3.8: {}
+
+  next-view-transitions@0.3.4(next@15.1.1-canary.22(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
+    dependencies:
+      next: 15.1.1-canary.22(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
 
   next@15.1.1-canary.22(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:
