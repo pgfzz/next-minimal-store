@@ -1,28 +1,52 @@
 'use client';
 
+import { useEffect } from 'react';
+import { useTransitionRouter } from 'next-view-transitions';
 import { motion } from 'motion/react';
 import { notFound, redirect } from 'next/navigation';
 import { getProductById } from '@/lib/products';
 import { AddToCart } from '@/components/add-to-cart';
-import { Header } from '@/components/header';
 import { ProductImage } from '@/components/product-image';
 
 export default function PDP({ slug }: { slug: string }) {
   const product = getProductById(slug);
+  const router = useTransitionRouter();
 
   if (!product) {
     notFound();
   }
 
   const handleBack = () => {
-    redirect('/');
+    router.back();
   };
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        handleBack();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [handleBack]);
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Header isBackVisible={true} onBack={handleBack} />
-      <main className="flex flex-col items-center justify-between pt-[20px]">
-        <div className="w-full max-w-4xl mx-auto flex-grow flex flex-col items-center justify-center p-4">
+      <main
+        className="flex flex-col items-center justify-between pt-[20px]"
+        style={{
+          top: '0',
+          height:
+            'calc(100vh - 80px - env(safe-area-inset-top) - env(safe-area-inset-bottom))',
+          paddingTop: 'calc(20px + env(safe-area-inset-top))',
+          paddingBottom: '0',
+        }}
+      >
+        <div className="w-full max-w-2xl mx-auto flex-grow flex flex-col items-center justify-center aspect-square">
           <ProductImage
             product={product}
             maxWidth="100%"

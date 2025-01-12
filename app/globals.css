@@ -85,3 +85,7 @@ html {
 [role='dialog'] {
   height: 100svh;
 }
+
+::view-transition-group(header) {
+  z-index: 100; /* Ensure the header is always on top when picture transition*/
+}

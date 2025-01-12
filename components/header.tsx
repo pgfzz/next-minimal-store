@@ -1,25 +1,34 @@
 'use client';
 
+import { useState, useCallback } from 'react';
+import { usePathname } from 'next/navigation';
+import { useTransitionRouter } from 'next-view-transitions';
 import { MainMenu } from './main-menu';
 import { Cart } from './cart';
-import { useState } from 'react';
 import { useCart } from './cart-context';
 
-interface HeaderProps {
-  isBackVisible: boolean;
-  onBack: any;
-}
-
-export function Header({ isBackVisible, onBack }: HeaderProps) {
+export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const router = useTransitionRouter();
+
   const { items } = useCart();
+
+  const handleBack = useCallback(() => {
+    router.back();
+  }, []);
+
+  const isHomePage = pathname === '/';
 
   const totalQuantity = items.reduce((total, item) => total + item.quantity, 0);
 
   return (
-    <nav className="flex items-center justify-between py-0 px-5 fixed top-0 left-0 right-0 z-10 bg-white">
+    <nav
+      style={{ viewTransitionName: 'header' }}
+      className="flex items-center justify-between py-0 px-5 fixed top-0 left-0 right-0 z-10 bg-white"
+    >
       <div className="flex items-center">
-        <MainMenu isBackVisible={isBackVisible} onBack={onBack} />
+        <MainMenu isBackVisible={!isHomePage} onBack={handleBack} />
       </div>
       <div className="flex items-center">
         <button

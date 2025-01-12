@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import { motion } from 'motion/react';
 import { Product } from '@/lib/products';
 
 interface ProductImageProps {
@@ -8,7 +7,6 @@ interface ProductImageProps {
   maxWidth?: string;
   maxHeight?: string;
   className?: string;
-  layoutId?: string;
 }
 
 export function ProductImage({
@@ -16,10 +14,9 @@ export function ProductImage({
   maxWidth = '100%',
   maxHeight = 'none',
   className = '',
-  layoutId,
 }: ProductImageProps) {
   return (
-    <motion.div
+    <div
       className={`relative mb-1 ${className}`}
       style={{
         width: '100%',
@@ -28,17 +25,17 @@ export function ProductImage({
         aspectRatio: '1',
         overflow: 'hidden',
       }}
-      layoutId={layoutId}
     >
       <Image
         src={product.image}
         alt={product.name}
         fill
+        style={{ viewTransitionName: product.id }}
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         className="object-contain transition-opacity duration-200 aspect-square"
         loading="eager"
         decoding="sync"
       />
-    </motion.div>
+    </div>
   );
 }

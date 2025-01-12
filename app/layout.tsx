@@ -1,7 +1,9 @@
 import './globals.css';
 import { GeistMono } from 'geist/font/mono';
 import { Metadata, Viewport } from 'next';
+import { ViewTransitions } from 'next-view-transitions';
 import { CartProvider } from '@/components/cart-context';
+import { Header } from '@/components/header';
 
 export const metadata: Metadata = {
   title: 'NEXYZY',
@@ -18,14 +20,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={`${GeistMono.className}`}>
-        <CartProvider>
-          <div className="flex flex-col min-h-screen h-screen mx-5 overflow-y-scroll">
-            {children}
-          </div>
-        </CartProvider>
-      </body>
-    </html>
+    <ViewTransitions>
+      <html lang="en">
+        <body className={`${GeistMono.className}`}>
+          <CartProvider>
+            <div className="flex flex-col min-h-screen h-screen mx-5 overflow-y-scroll">
+              <Header />
+              {children}
+            </div>
+          </CartProvider>
+        </body>
+      </html>
+    </ViewTransitions>
   );
 }
