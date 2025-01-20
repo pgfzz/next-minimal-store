@@ -1,10 +1,27 @@
 'use client';
 
+import { useEffect } from 'react';
 import { Link } from 'next-view-transitions';
 import { products } from '@/lib/products';
 import { ProductImage } from '@/components/product-image';
+import { throttle } from '@/lib/utils';
 
 export default function Page() {
+  useEffect(() => {
+    const sessionKey = 'scroll_/';
+    const savedPosition = sessionStorage.getItem(sessionKey);
+    if (savedPosition) {
+      window.scrollTo(0, parseInt(savedPosition));
+    }
+
+    const handleScroll = throttle(() => {
+      sessionStorage.setItem(sessionKey, window.scrollY.toString());
+    }, 500);
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <div className="flex flex-col min-h-screen">
       <main className="flex-grow relative pt-12">
