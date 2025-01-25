@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect } from 'react';
-import { useTransitionRouter } from 'next-view-transitions';
+import { useEffect, startTransition } from 'react';
+import { useRouter } from 'next/navigation';
 import { motion } from 'motion/react';
 import { notFound, redirect } from 'next/navigation';
 import { getProductById } from '@/lib/products';
@@ -10,14 +10,16 @@ import { ProductImage } from '@/components/product-image';
 
 export default function PDP({ slug }: { slug: string }) {
   const product = getProductById(slug);
-  const router = useTransitionRouter();
+  const router = useRouter();
 
   if (!product) {
     notFound();
   }
 
   const handleBack = () => {
-    router.back();
+    startTransition(() => {
+      startTransition(() => router.push(document.referrer || '/'));
+    });
   };
 
   useEffect(() => {
@@ -32,6 +34,18 @@ export default function PDP({ slug }: { slug: string }) {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
+  }, [handleBack]);
+
+  useEffect(() => {
+    const handlePopState = (e: PopStateEvent) => {
+      e.preventDefault();
+      handleBack();
+    };
+
+    window.history.pushState(null, '', window.location.pathname);
+    window.addEventListener('popstate', handlePopState);
+
+    return () => window.removeEventListener('popstate', handlePopState);
   }, [handleBack]);
 
   return (

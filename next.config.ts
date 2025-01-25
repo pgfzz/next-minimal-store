@@ -16,6 +16,7 @@ const nextConfig: NextConfig = {
   experimental: {
     ppr: true,
     inlineCss: true,
+    viewTransition: true,
   },
 };
 

@@ -1,8 +1,7 @@
 'use client';
 
-import { useState, useCallback } from 'react';
-import { usePathname } from 'next/navigation';
-import { useTransitionRouter } from 'next-view-transitions';
+import { useState, useCallback, startTransition } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 import { MainMenu } from './main-menu';
 import { Cart } from './cart';
 import { useCart } from './cart-context';
@@ -10,12 +9,12 @@ import { useCart } from './cart-context';
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
-  const router = useTransitionRouter();
+  const router = useRouter();
 
   const { items } = useCart();
 
   const handleBack = useCallback(() => {
-    router.back();
+    startTransition(() => router.push(document.referrer || '/'));
   }, []);
 
   const isHomePage = pathname === '/';
